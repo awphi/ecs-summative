@@ -54,18 +54,6 @@ def calculate_r_encode(rho):
 def calculate_r_decode(rho):
     return calculate_r(rho, lambda r: 2**r - 1)
 
-def message(a):
-    rho = len(a)
-    r = 1
-    flag = True
-    while(flag):
-        r += 1
-        k = 2**r - r - 1
-        kr = (2**r - 2 * r - 1)
-        flag = not((kr  == (k - r)) and kr >= rho)
-    m = decimalToVector(rho, r) + a + [0]*(k - (r + rho))
-    return m
-
 def list_and(a, b):
     m = []
     for i in range(len(a)):
@@ -167,8 +155,32 @@ def messageFromCodeword(c):
             
     return m
 
+def message(a):
+    rho = len(a)
+    r = 1
+    flag = True
+    while(flag):
+        r += 1
+        k = 2**r - r - 1
+        kr = (2**r - 2 * r - 1)
+        flag = not((kr  == (k - r)) and kr >= rho)
+    # m = [rho in r bits][data][padding zeroes]
+    m = decimalToVector(rho, r) + a + [0]*(k - (r + rho))
+    return m
+
 def dataFromMessage(m):
-    return []
+    n = len(m)
+    r = calculate_r_encode(n)
+
+    if(not(r)):
+        return []
+    
+    rho = vectorToDecimal(m[0:r])
+    
+    if(n - r < rho):
+        return []
+
+    return m[r:r + rho]
 
 #function HammingG
 #input: a number r

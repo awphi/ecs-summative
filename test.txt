@@ -134,9 +134,9 @@ Part 7. dataFromMessage(m)
 
 7.0.
 Input:		[0, 0, 1, 1]
-Output:		[] 
+Output:		[1] 
 Solution:	[1] 
-Outcome:	NO
+Outcome:	ok
 
 7.1.
 Input:		[1, 1, 1, 1]
@@ -144,7 +144,7 @@ Output:		[]
 Solution:	[] 
 Outcome:	ok
 
-Part 7: 0 marks
+Part 7: 20 marks
 
 
-TOTAL = 80 MARKS
+TOTAL = 100 MARKS

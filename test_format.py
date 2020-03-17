@@ -5,7 +5,7 @@
 # 1. Copy this file into the same folder as your main .py file
 # 2. In the following line, change "practical" to your main .py file, filename
 
-from payload import *
+from practical import *
 
 # 3. Run this file (you can simply double-click on it in the file explorer or 
 # run from cmd/terminal by calling 'python test_format.py')
