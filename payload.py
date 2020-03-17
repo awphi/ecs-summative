@@ -11,6 +11,14 @@ def decimalToVector(i, l):
 
     return vec
 
+def vectorToDecimal(i):
+    c = 0
+    p = 0
+    for j in reversed(i):
+        c += j * 2**p
+        p += 1
+    return c
+
 def repetitionEncoder(m, n):
     return m * n
 
@@ -28,29 +36,23 @@ def repetitionDecoder(v):
     
     return []
 
-def calculate_r_encode(rho):
+def calculate_r(rho, func):
     r = 1
     kr = 0
     flag = True
     while(flag or kr < rho):
         r += 1
-        kr = (2**r - r - 1)
+        kr = func(r)
         if(kr == rho):
             return r
         flag = False
     return False
 
+def calculate_r_encode(rho):
+    return calculate_r(rho, lambda r: 2**r - r - 1)
+
 def calculate_r_decode(rho):
-    r = 1
-    kr = 0
-    flag = True
-    while(flag or kr < rho):
-        r += 1
-        kr = (2**r - 1)
-        if(kr == rho):
-            return r
-        flag = False
-    return False
+    return calculate_r(rho, lambda r: 2**r - 1)
 
 def message(a):
     rho = len(a)
@@ -101,21 +103,50 @@ def hammingEncoder(m):
         
     return out
 
+def list_dot(a, b):
+    c = 0
+    for i in range(len(a)):
+        c += a[i] * b[i]
+    return c
+
+def is_zero(a):
+    for i in a:
+        if i != 0:
+            return False
+    return True
+
 def hammingDecoder(v):
     n = len(v)
+    v = v.copy()
     r = calculate_r_decode(n)
 
     if(not(r)):
         return []
     
-    Ht = []
-    for i in reversed(range(1, 2**r)):
-        Ht.append(decimalToVector(i, 3))
-    
-    for i in Ht:
-        print(i)
+    H = []
+    for i in range(1, 2**r):
+        H.append(list(reversed(decimalToVector(i, 3))))
 
-    return []
+    #transpose
+    H = [list(i) for i in zip(*H)]
+
+    dot = []
+
+    for i in H:
+        dot.insert(0, list_dot(i, v) % 2)
+
+    if(is_zero(dot)):
+        return v
+    
+    bi = vectorToDecimal(dot) - 1
+
+    print(dot, bi, v)
+    if(v[bi] == 0):
+        v[bi] = 1
+    else:
+        v[bi] = 0
+    
+    return v
 
 def messageFromCodeword(c):
     return []
@@ -161,5 +192,3 @@ def hammingGeneratorMatrix(r):
     G = [list(i) for i in zip(*G)]
 
     return G
-
-hammingDecoder([1, 1, 1, 0, 0, 0, 0])
