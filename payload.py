@@ -124,23 +124,28 @@ def hammingDecoder(v):
         return []
     
     H = []
-    for i in range(1, 2**r):
-        H.append(list(reversed(decimalToVector(i, 3))))
 
-    #transpose
-    H = [list(i) for i in zip(*H)]
+    # generates H of correct size
+    for i in range(r):
+        H.append(['-'] * (2**r - 1))
+
+    #fills H
+    for i in range(1, 2**r):
+        vec = decimalToVector(i, r)
+        for j in range(len(H)):
+            H[j][i - 1] = vec[j]
 
     dot = []
-
+    
+    #dots rows of H with v
     for i in H:
-        dot.insert(0, list_dot(i, v) % 2)
+        dot.append(list_dot(i, v) % 2)
 
     if(is_zero(dot)):
         return v
     
     bi = vectorToDecimal(dot) - 1
 
-    print(dot, bi, v)
     if(v[bi] == 0):
         v[bi] = 1
     else:
