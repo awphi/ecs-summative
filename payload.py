@@ -154,7 +154,18 @@ def hammingDecoder(v):
     return v
 
 def messageFromCodeword(c):
-    return []
+    n = len(c)
+    r = calculate_r_decode(n)
+    if(not(r)):
+        return []
+    
+    m = []
+
+    for i in range(n):
+        if(not(math.log(i + 1, 2).is_integer())):
+            m.append(c[i])
+            
+    return m
 
 def dataFromMessage(m):
     return []

@@ -116,9 +116,9 @@ Part 6. messageFromCodeword(c)
 
 6.0.
 Input:		[1, 1, 1, 1, 1, 1, 1]
-Output:		[] 
+Output:		[1, 1, 1, 1] 
 Solution:	[1, 1, 1, 1] 
-Outcome:	NO
+Outcome:	ok
 
 6.1.
 Input:		[0, 0, 0, 0]
@@ -126,7 +126,7 @@ Output:		[]
 Solution:	[] 
 Outcome:	ok
 
-Part 6: 0 marks
+Part 6: 10 marks
 
 
  
@@ -147,4 +147,4 @@ Outcome:	ok
 Part 7: 0 marks
 
 
-TOTAL = 70 MARKS
+TOTAL = 80 MARKS
